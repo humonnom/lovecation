@@ -101,9 +101,9 @@ export const AuthScreen = () =>  {
                     {/* Header */}
                     <View style={styles.header}>
                         <View style={styles.logoContainer}>
-                            <Icon name="favorite" size={60} color="#EE9CA7" />
+                            <Icon name="favorite" size={40} color="#EE9CA7" />
                         </View>
-                        <Text style={styles.title}>LongVaca</Text>
+                        <Text style={styles.title}>Long Vacation</Text>
                         <Text style={styles.subtitle}>새로운 인연을 만나보세요</Text>
                     </View>
 
@@ -199,18 +199,18 @@ export const AuthScreen = () =>  {
                         </View>
 
                         {/* Social Login Placeholder */}
-                        <View style={styles.socialContainer}>
-                            <View style={styles.divider}>
-                                <View style={styles.dividerLine} />
-                                <Text style={styles.dividerText}>또는</Text>
-                                <View style={styles.dividerLine} />
-                            </View>
+                        {/*<View style={styles.socialContainer}>*/}
+                        {/*    <View style={styles.divider}>*/}
+                        {/*        <View style={styles.dividerLine} />*/}
+                        {/*        <Text style={styles.dividerText}>또는</Text>*/}
+                        {/*        <View style={styles.dividerLine} />*/}
+                        {/*    </View>*/}
 
-                            <TouchableOpacity style={styles.socialButton} onPress={() => Alert.alert("준비 중", "소셜 로그인 기능을 준비 중입니다.")}>
-                                <Icon name="login" size={20} color="#666" />
-                                <Text style={styles.socialButtonText}>소셜 로그인</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {/*    <TouchableOpacity style={styles.socialButton} onPress={() => Alert.alert("준비 중", "소셜 로그인 기능을 준비 중입니다.")}>*/}
+                        {/*        <Icon name="login" size={20} color="#666" />*/}
+                        {/*        <Text style={styles.socialButtonText}>소셜 로그인</Text>*/}
+                        {/*    </TouchableOpacity>*/}
+                        {/*</View>*/}
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -236,8 +236,8 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     logoContainer: {
-        width: 100,
-        height: 100,
+        width: 70,
+        height: 70,
         borderRadius: 50,
         backgroundColor: "#FFCBD2",
         justifyContent: "center",

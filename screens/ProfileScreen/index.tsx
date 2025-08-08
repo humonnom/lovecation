@@ -12,8 +12,11 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { InterestSection } from "../../components/InterestSection";
 import { Header } from "../../components/Header";
 import {supabase} from "../../lib/supabase";
+import {useUserProfile} from "../../hooks/queries";
 
 export const ProfileScreen = () => {
+  const { profile, loading, updateProfile, displayName, avatarUrl } = useUserProfile();
+
   const [hasRequestedLaunch, setHasRequestedLaunch] = React.useState(false);
 
   const handleLaunchRequest = () => {
@@ -60,7 +63,7 @@ export const ProfileScreen = () => {
             <Icon name='edit' size={16} color='#666' />
           </TouchableOpacity>
         </View>
-        <Text style={styles.profileName}>박준상 29</Text>
+        <Text style={styles.profileName}>{displayName} 29</Text>
         <Text style={styles.profileLocation}>서울, 강남구</Text>
       </View>
 

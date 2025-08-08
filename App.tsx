@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -13,7 +13,16 @@ import { AuthScreen } from "./screens/AuthScreen";
 const Tab = createBottomTabNavigator();
 
 const AppContent = () => {
-  const { session } = useAuth();
+  const { session, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#FDFDFD", justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#EE9CA7" />
+        <Text style={{ marginTop: 10, color: "#666" }}>로딩 중...</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FDFDFD" }}>

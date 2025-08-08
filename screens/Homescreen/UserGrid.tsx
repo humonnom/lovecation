@@ -2,12 +2,14 @@ import * as React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { User } from "../../types";
 import { UserCard } from "./UserCard";
+import {useEffect} from "react";
+import {supabase} from "../../lib/supabase";
 
 interface UserGridProps {
   users: User[];
 }
 
-export const UserGrid = ({ users }: UserGridProps) => {
+export const UserGrid = async({ users }: UserGridProps) => {
   return (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.userGrid}>
