@@ -2,8 +2,6 @@ import * as React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { User } from "../../types";
 import { UserCard } from "./UserCard";
-import {useEffect} from "react";
-import {supabase} from "../../lib/supabase";
 
 interface UserGridProps {
   users: User[];
