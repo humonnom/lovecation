@@ -15,6 +15,7 @@ import {supabase} from "../../lib/supabase";
 import {useUserProfile} from "../../hooks/queries";
 
 export const ProfileScreen = () => {
+  // TODO: 프로필 정보 가져오기
   const { profile, loading, updateProfile, displayName, avatarUrl } = useUserProfile();
 
   const [hasRequestedLaunch, setHasRequestedLaunch] = React.useState(false);
