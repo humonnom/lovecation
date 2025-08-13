@@ -4,11 +4,34 @@ import { SafeAreaView, Text, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HomeScreen } from "./screens/HomeScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
 import { EmptyScreenComponent } from "./components/EmptyScreenComponent";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { AuthScreen } from "./screens/AuthScreen";
+
+// Create a QueryClient optimized for React Native + Zustand
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: (failureCount, error) => {
+        // Don't retry on 404s or auth errors
+        if ((error as any)?.status === 404 || (error as any)?.status === 401) {
+          return false
+        }
+        return failureCount < 2
+      },
+      refetchOnWindowFocus: false, // React Native doesn't have window focus
+      refetchOnMount: false, // Let Zustand handle initial auth state
+      refetchOnReconnect: 'always', // Refetch when network reconnects
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -95,8 +118,10 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
