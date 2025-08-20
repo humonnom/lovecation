@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { Header } from "../../components/Header";
 import { UserGrid } from "./UserGrid";
-import { mockUsers } from "../../data";
+import { mockProfiles } from "../../data";
 
 export const HomeScreen = () => {
   return (
@@ -11,7 +11,7 @@ export const HomeScreen = () => {
         title='새로운 인연 찾기'
         subtitle='하트를 눌러 관심을 표현해보세요.'
       />
-      <UserGrid users={mockUsers} />
+      <UserGrid users={mockProfiles} />
     </View>
   );
 };

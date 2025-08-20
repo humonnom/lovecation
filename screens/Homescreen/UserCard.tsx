@@ -1,15 +1,15 @@
 import * as React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import type { User } from "../../types";
+import type { Profile } from "../../types";
 
 interface UserCardProps {
-  user: User;
-  onLikeToggle?: (userId: number, isLiked: boolean) => void;
+  user: Profile;
+  onLikeToggle?: (userId: string, isLiked: boolean) => void;
 }
 
 export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
-  const [isLiked, setIsLiked] = React.useState(user.isLiked || false);
+  const [isLiked, setIsLiked] = React.useState(false);
 
   const handleLikePress = () => {
     const newLikedState = !isLiked;
@@ -18,7 +18,7 @@ export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
   };
 
   const handleCardPress = () => {
-    console.log(`프로필 보기: ${user.name}`);
+    console.log(`프로필 보기: ${user.first_name}`);
     // 프로필 클릭 수 수집
   };
 
@@ -30,18 +30,19 @@ export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
         onPress={handleCardPress}
       >
         <Image
-          source={user.image}
+          source={user.avatar_url || require("../../assets/profiles/profile1.jpg")}
           style={styles.userImage}
           resizeMode='cover'
         />
         <View style={styles.cardOverlay}>
           <View style={styles.userInfo}>
             <Text style={styles.userName}>
-              {user.name}, {user.age}
+              {user.first_name}, {user.age}
             </Text>
             <Text style={styles.userCity}>{user.city}</Text>
           </View>
-          {user.isOnline && <View style={styles.onlineIndicator} />}
+          {/* NOTE: 필수 기능 x 주석처리 */}
+          {/*{user.is_online && <View style={styles.onlineIndicator} />}*/}
         </View>
       </TouchableOpacity>
 

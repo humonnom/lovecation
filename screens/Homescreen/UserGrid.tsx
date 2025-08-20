@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { User } from "../../types";
+import { Profile } from "../../types";
 import { UserCard } from "./UserCard";
 
 interface UserGridProps {
-  users: User[];
+  users: Profile[];
 }
 
 export const UserGrid = ({ users }: UserGridProps) => {
