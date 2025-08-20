@@ -72,6 +72,8 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         .upsert({
           id: userId,
           nickname: updates.nickname || updates.first_name || 'User',
+          avatar_url: updates.avatar_url || 'https://images.unsplash.com/photo-1494790108755-2616b612b742?w=400&h=400&fit=crop&crop=face',
+          name_reading: updates.name_reading || '',
           ...updates,
           updated_at: new Date().toISOString(),
         })
