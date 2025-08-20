@@ -734,6 +734,7 @@ export type Database = {
           last_name: string | null
           name_reading: string | null
           nationality: string | null
+          nickname: string
           updated_at: string | null
         }
         Insert: {
@@ -748,6 +749,7 @@ export type Database = {
           last_name?: string | null
           name_reading?: string | null
           nationality?: string | null
+          nickname: string
           updated_at?: string | null
         }
         Update: {
@@ -762,6 +764,7 @@ export type Database = {
           last_name?: string | null
           name_reading?: string | null
           nationality?: string | null
+          nickname?: string
           updated_at?: string | null
         }
         Relationships: []

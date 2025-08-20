@@ -71,6 +71,7 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         .from('profiles')
         .upsert({
           id: userId,
+          nickname: updates.nickname || updates.first_name || 'User',
           ...updates,
           updated_at: new Date().toISOString(),
         })
@@ -133,7 +134,7 @@ export const useUserProfile = () => {
     error,
     updateProfile: handleUpdateProfile,
     user,
-    displayName: profile?.first_name || user?.email?.split('@')[0] || 'Unknown',
+    displayName: profile?.nickname,
     avatarUrl: profile?.avatar_url,
   }
 }
