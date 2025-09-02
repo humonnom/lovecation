@@ -274,18 +274,24 @@ export const AuthScreen = () =>  {
                                                 placeholder="나이"
                                                 value={age}
                                                 onChangeText={setAge}
-                                                keyboardType="numeric"
+                                                keyboardType="number-pad"
                                             />
                                         </View>
                                     </View>
                                     <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="성별 (male/female)"
-                                                value={gender}
-                                                onChangeText={setGender}
-                                            />
+                                        <View style={styles.genderContainer}>
+                                            <TouchableOpacity 
+                                                style={[styles.genderButton, gender === 'male' && styles.genderButtonSelected]}
+                                                onPress={() => setGender('male')}
+                                            >
+                                                <Text style={[styles.genderButtonText, gender === 'male' && styles.genderButtonTextSelected]}>남성</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity 
+                                                style={[styles.genderButton, gender === 'female' && styles.genderButtonSelected]}
+                                                onPress={() => setGender('female')}
+                                            >
+                                                <Text style={[styles.genderButtonText, gender === 'female' && styles.genderButtonTextSelected]}>여성</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 </View>
@@ -302,13 +308,19 @@ export const AuthScreen = () =>  {
                                         </View>
                                     </View>
                                     <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="국가 (KR, US, ...)"
-                                                value={nationality}
-                                                onChangeText={setNationality}
-                                            />
+                                        <View style={styles.genderContainer}>
+                                            <TouchableOpacity 
+                                                style={[styles.genderButton, nationality === 'KR' && styles.genderButtonSelected]}
+                                                onPress={() => setNationality('KR')}
+                                            >
+                                                <Text style={[styles.genderButtonText, nationality === 'KR' && styles.genderButtonTextSelected]}>Korea</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity 
+                                                style={[styles.genderButton, nationality === 'JP' && styles.genderButtonSelected]}
+                                                onPress={() => setNationality('JP')}
+                                            >
+                                                <Text style={[styles.genderButtonText, nationality === 'JP' && styles.genderButtonTextSelected]}>Japan</Text>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 </View>
@@ -517,5 +529,30 @@ const styles = StyleSheet.create({
     },
     halfWidth: {
         width: "48%",
+    },
+    genderContainer: {
+        flexDirection: "row",
+        gap: 8,
+    },
+    genderButton: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#E0E0E0",
+        borderRadius: 12,
+        paddingVertical: 12,
+        alignItems: "center",
+        backgroundColor: "#FAFAFA",
+    },
+    genderButtonSelected: {
+        backgroundColor: "#EE9CA7",
+        borderColor: "#EE9CA7",
+    },
+    genderButtonText: {
+        fontSize: 16,
+        color: "#666",
+    },
+    genderButtonTextSelected: {
+        color: "white",
+        fontWeight: "600",
     },
 })
