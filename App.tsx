@@ -83,13 +83,13 @@ const AppContent = () => {
             tabBarIcon: ({ color, size }) => {
               let iconName = "explore";
 
-              if (route.name === t('tabs.explore')) {
+              if (route.name === "Explore") {
                 iconName = "explore";
-              } else if (route.name === t('tabs.match')) {
+              } else if (route.name === "Match") {
                 iconName = "favorite";
-              } else if (route.name === t('tabs.message')) {
+              } else if (route.name === "Message") {
                 iconName = "chat";
-              } else if (route.name === t('tabs.profile')) {
+              } else if (route.name === "Profile") {
                 iconName = "person";
               }
 
@@ -110,32 +110,46 @@ const AppContent = () => {
             },
           })}
         >
-          <Tab.Screen name={t('tabs.explore')} component={HomeStack} />
-        <Tab.Screen name={t('tabs.match')}>
+          <Tab.Screen
+            name="Explore"
+            component={HomeStack}
+            options={{ tabBarLabel: t('tabs.explore') }}
+          />
+        <Tab.Screen
+          name="Match"
+          options={{ tabBarLabel: t('tabs.match') }}
+        >
           {(props: any) => (
             <EmptyScreenComponent
               {...props}
               onNavigateToProfile={() => {
-                props.navigation.navigate(t('tabs.profile'));
+                props.navigation.navigate("Profile");
               }}
               featureName={t('tabs.match')}
               icon='favorite'
             />
           )}
         </Tab.Screen>
-         <Tab.Screen name={t('tabs.message')}>
+         <Tab.Screen
+           name="Message"
+           options={{ tabBarLabel: t('tabs.message') }}
+         >
             {(props: any) => (
               <EmptyScreenComponent
                 {...props}
                 onNavigateToProfile={() => {
-                  props.navigation.navigate(t('tabs.profile'));
+                  props.navigation.navigate("Profile");
                 }}
                 featureName={t('tabs.message')}
                 icon='chat'
               />
             )}
           </Tab.Screen>
-          <Tab.Screen name={t('tabs.profile')} component={session && session.user ? ProfileScreen : AuthScreen} />
+          <Tab.Screen
+            name="Profile"
+            component={session && session.user ? ProfileScreen : AuthScreen}
+            options={{ tabBarLabel: t('tabs.profile') }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaView>

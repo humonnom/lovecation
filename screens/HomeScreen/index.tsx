@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, ActivityIndicator, Text, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 import { Header } from "../../components/Header";
 import { UserGrid } from "./UserGrid";
 import { useProfiles } from "../../hooks/queries";
@@ -7,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import Locale from "../../components/Locale";
 
 export const HomeScreen = () => {
+  const { t } = useTranslation();
   const { session, user } = useAuth();
   const isLoggedIn = !!session;
   
@@ -25,12 +27,12 @@ export const HomeScreen = () => {
     return (
       <View style={styles.container}>
         <Header
-          title='새로운 인연 찾기'
-          subtitle='하트를 눌러 관심을 표현해보세요.'
+          title={t('home.title')}
+          subtitle={t('home.subtitle')}
         />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#EE9CA7" />
-          <Text style={styles.loadingText}>프로필을 불러오는 중...</Text>
+          <Text style={styles.loadingText}>{t('home.loadingProfiles')}</Text>
         </View>
       </View>
     );
@@ -40,11 +42,11 @@ export const HomeScreen = () => {
     return (
       <View style={styles.container}>
         <Header
-          title='새로운 인연 찾기'
-          subtitle='하트를 눌러 관심을 표현해보세요.'
+          title={t('home.title')}
+          subtitle={t('home.subtitle')}
         />
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>프로필을 불러올 수 없습니다</Text>
+          <Text style={styles.errorText}>{t('home.errorLoadingProfiles')}</Text>
           <Text style={styles.errorMessage}>{error}</Text>
         </View>
       </View>
@@ -54,8 +56,8 @@ export const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Header
-        title='새로운 인연 찾기'
-        subtitle='하트를 눌러 관심을 표현해보세요.'
+        title={t('home.title')}
+        subtitle={t('home.subtitle')}
       />
       <UserGrid users={profiles} />
     </View>
