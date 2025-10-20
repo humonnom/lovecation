@@ -34,10 +34,10 @@ export const EmptyScreenComponent = ({
         </Text>
 
         <InterestSection
-          lunchMessage='받은 관심에 대해서 자세히 알아보세요.'
-          onPressButton={onNavigateToProfile}
-          buttonText='프로필 페이지에서 확인하기'
-          simple
+          // lunchMessage='지금 사전 신청하시고 정식 런치 알림을 받아보세요!'
+          // onPressButton={onNavigateToProfile}
+          // buttonText='프로필 페이지에서 신청하기'
+          // simple
         />
       </View>
     </SafeAreaView>

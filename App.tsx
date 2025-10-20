@@ -3,10 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, Text, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HomeScreen } from "./screens/HomeScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
+import { ProfileDetailPage } from "./screens/UserDetailScreen";
 import { EmptyScreenComponent } from "./components/EmptyScreenComponent";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { AuthScreen } from "./screens/AuthScreen";
@@ -34,6 +36,26 @@ const queryClient = new QueryClient({
 });
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+// Stack Navigator for Home screen with UserDetail
+const HomeStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="HomeMain" component={HomeScreen} />
+      <Stack.Screen
+        name="UserDetail"
+        component={ProfileDetailPage}
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerTransparent: true,
+          headerTintColor: "#333",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const AppContent = () => {
   const { session, loading } = useAuth();
@@ -84,7 +106,7 @@ const AppContent = () => {
             },
           })}
         >
-          <Tab.Screen name='둘러보기' component={HomeScreen} />
+          <Tab.Screen name='둘러보기' component={HomeStack} />
         <Tab.Screen name='매치'>
           {(props: any) => (
             <EmptyScreenComponent

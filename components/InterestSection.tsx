@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, Text, TouchableOpacity, Linking, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 interface InterestedUser {
@@ -16,8 +16,8 @@ const mockInterestedUsers: InterestedUser[] = [
 ];
 
 type InterestSectionBasicProps = {
-  lunchMessage: string;
-  simple?: boolean;
+  // lunchMessage: string;
+  // simple?: boolean;
 };
 
 type InterestSectionProps = InterestSectionBasicProps &
@@ -65,47 +65,68 @@ const renderStackedAvatars = () => {
 };
 
 export const InterestSection = (props: InterestSectionProps) => {
+  const handleTypeformPress = async () => {
+    const typeformUrl = 'https://form.typeform.com/to/GD1xzjd6';
+
+    try {
+      const supported = await Linking.canOpenURL(typeformUrl);
+
+      if (supported) {
+        await Linking.openURL(typeformUrl);
+      } else {
+        Alert.alert('오류', '링크를 열 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('Error opening Typeform:', error);
+      Alert.alert('오류', '링크를 여는 중 문제가 발생했습니다.');
+    }
+  };
+
   return (
     <View style={styles.interestSection}>
       <View style={styles.interestHeader}>
-        <Text style={styles.interestTitle}>받은 관심</Text>
-        <Text style={styles.interestCount}>{mockInterestedUsers.length}명</Text>
+        <Text style={styles.interestTitle}>사전 신청하기</Text>
+        {/*<Text style={styles.interestTitle}>받은 관심</Text>*/}
+        {/*<Text style={styles.interestCount}>{mockInterestedUsers.length}명</Text>*/}
       </View>
-      {props.simple ? (
-        <View style={styles.interestContent}>
-          <View style={styles.interestText}>
-            {!props.simple && (
-              <Text style={styles.interestDescription}>
-                이 분들이 회원님에게 관심을 보냈어요!
-              </Text>
-            )}
-            <Text style={styles.launchMessage}>{props.lunchMessage}</Text>
-          </View>
-        </View>
-      ) : (
+      {/*{props.simple ? (*/}
+      {/*  <View style={styles.interestContent}>*/}
+      {/*    <View style={styles.interestText}>*/}
+      {/*      {!props.simple && (*/}
+      {/*        <Text style={styles.interestDescription}>*/}
+      {/*          /!*이 분들이 회원님에게 관심을 보냈어요!*!/*/}
+      {/*          /!*선착순 100명에게만 주어지는 무료 매칭 기회!*!/*/}
+      {/*        </Text>*/}
+      {/*      )}*/}
+      {/*      <Text style={styles.launchMessage}>{props.lunchMessage}</Text>*/}
+      {/*    </View>*/}
+      {/*  </View>*/}
+      {/*) : (*/}
         <View style={styles.interestContent}>
           {renderStackedAvatars()}
           <View style={styles.interestText}>
             <Text style={styles.interestDescription}>
-              이 분들이 회원님에게 관심을 보냈어요!
+              선착순 100명 한정 얼리버드 혜택 안내
             </Text>
-            <Text style={styles.launchMessage}>{props.lunchMessage}</Text>
+            <Text style={styles.launchMessage}>{'✓ 정식 출시 전 미리 체험'}</Text>
+            <Text style={styles.launchMessage}>{'✓ 첫 달 프리미엄 무료'}</Text>
+            <Text style={styles.launchMessage}>{'✓ 프로필 우선 노출'}</Text>
           </View>
         </View>
-      )}
+      {/*)}*/}
       {/* Navigate to Profile Button */}
-      {props?.renderButton ? (
-        props.renderButton()
-      ) : (
+      {/*{props?.renderButton ? (*/}
+      {/*  props.renderButton()*/}
+      {/*) : (*/}
         <TouchableOpacity
           style={styles.profileButton}
-          onPress={props.onPressButton}
+          onPress={handleTypeformPress}
         >
           <Icon name='person' size={20} color='white' />
-          <Text style={styles.profileButtonText}>{props.buttonText}</Text>
+          <Text style={styles.profileButtonText}>사전 신청하고 혜택 받기</Text>
           <Icon name='arrow-forward' size={20} color='white' />
         </TouchableOpacity>
-      )}
+      {/*)}*/}
     </View>
   );
 };

@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import type { Profile } from "../../types";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 interface UserCardProps {
   user: Profile;
@@ -12,7 +13,8 @@ interface UserCardProps {
 export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
   const [isLiked, setIsLiked] = React.useState(false);
   const { session } = useAuth();
-  const isLoggedIn = !!session;
+  const isLoggedIn = true; //!!session;
+  const navigation = useNavigation();
 
   const handleLikePress = () => {
     const newLikedState = !isLiked;
@@ -22,7 +24,8 @@ export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
 
   const handleCardPress = () => {
     console.log(`프로필 보기: ${user.first_name}`);
-    // 프로필 클릭 수 수집
+    //@ts-ignore NOTE: 나중에 해결
+    navigation.navigate("UserDetail" as never, { user } as never);
   };
 
   return (

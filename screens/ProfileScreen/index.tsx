@@ -77,33 +77,33 @@ export const ProfileScreen = () => {
 
       <View style={styles.interestSection}>
         <InterestSection
-          lunchMessage='앱 정식 런치 후, 매치된 분들과 연결될 수 있어요.'
-          renderButton={() => (
-            <TouchableOpacity
-              style={[
-                styles.launchButton,
-                hasRequestedLaunch && styles.launchButtonDisabled,
-              ]}
-              onPress={handleLaunchRequest}
-              disabled={hasRequestedLaunch}
-            >
-              <Icon
-                name={hasRequestedLaunch ? "check-circle" : "notifications"}
-                size={20}
-                color={hasRequestedLaunch ? "#4CAF50" : "white"}
-              />
-              <Text
-                style={[
-                  styles.launchButtonText,
-                  hasRequestedLaunch && styles.launchButtonTextDisabled,
-                ]}
-              >
-                {hasRequestedLaunch
-                  ? "정식 런치 희망 완료"
-                  : "정식 런치 희망하기"}
-              </Text>
-            </TouchableOpacity>
-          )}
+        //  lunchMessage='앱 정식 런치 후, 매치된 분들과 연결될 수 있어요.'
+        //   renderButton={() => (
+        //     <TouchableOpacity
+        //       style={[
+        //         styles.launchButton,
+        //         hasRequestedLaunch && styles.launchButtonDisabled,
+        //       ]}
+        //       onPress={handleLaunchRequest}
+        //       disabled={hasRequestedLaunch}
+        //     >
+        //       <Icon
+        //         name={hasRequestedLaunch ? "check-circle" : "notifications"}
+        //         size={20}
+        //         color={hasRequestedLaunch ? "#4CAF50" : "white"}
+        //       />
+        //       <Text
+        //         style={[
+        //           styles.launchButtonText,
+        //           hasRequestedLaunch && styles.launchButtonTextDisabled,
+        //         ]}
+        //       >
+        //         {hasRequestedLaunch
+        //           ? "정식 런치 희망 완료"
+        //           : "정식 런치 희망하기"}
+        //       </Text>
+        //     </TouchableOpacity>
+        //   )}
         />
       </View>
 

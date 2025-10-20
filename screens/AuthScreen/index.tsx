@@ -14,6 +14,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons"
 import {useState} from "react";
 import {supabase} from "../../lib/supabase";
+import {InterestSection} from "../../components/InterestSection";
 
 export const AuthScreen = () =>  {
     const [email, setEmail] = useState("")
@@ -145,234 +146,244 @@ export const AuthScreen = () =>  {
                         <Text style={styles.subtitle}>새로운 인연을 만나보세요</Text>
                     </View>
 
-                    {/* Form */}
-                    <View style={styles.formContainer}>
-                        <Text style={styles.formTitle}>{isSignUp ? "회원가입" : "로그인"}</Text>
-
-                        {/* Email Input */}
-                        <View style={styles.inputContainer}>
-                            <View style={styles.inputWrapper}>
-                                <Icon name="email" size={20} color="#666" style={styles.inputIcon} />
-                                <TextInput
-                                    style={styles.textInput}
-                                    placeholder="이메일을 입력하세요"
-                                    value={email}
-                                    onChangeText={setEmail}
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                    autoCorrect={false}
-                                />
-                            </View>
-                        </View>
-
-                        {/* Password Input */}
-                        <View style={styles.inputContainer}>
-                            <View style={styles.inputWrapper}>
-                                <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />
-                                <TextInput
-                                    style={styles.textInput}
-                                    placeholder="비밀번호를 입력하세요"
-                                    value={password}
-                                    onChangeText={setPassword}
-                                    secureTextEntry={!showPassword}
-                                    autoCapitalize="none"
-                                />
-                                <TouchableOpacity
-                                    onPress={() => setShowPassword(!showPassword)}
-                                    style={styles.eyeButton}
-                                >
-                                    <Icon
-                                        name={showPassword ? "visibility" : "visibility-off"}
-                                        size={20}
-                                        color="#666"
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        {/* Confirm Password Input (Sign Up only) */}
-                        {isSignUp && (
-                            <View style={styles.inputContainer}>
-                                <View style={styles.inputWrapper}>
-                                    <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />
-                                    <TextInput
-                                        style={styles.textInput}
-                                        placeholder="비밀번호를 다시 입력하세요"
-                                        value={confirmPassword}
-                                        onChangeText={setConfirmPassword}
-                                        secureTextEntry={!showConfirmPassword}
-                                        autoCapitalize="none"
-                                    />
-                                    <TouchableOpacity
-                                        onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        style={styles.eyeButton}
-                                    >
-                                        <Icon
-                                            name={showConfirmPassword ? "visibility" : "visibility-off"}
-                                            size={20}
-                                            color="#666"
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        )}
-
-                        {/* Profile Fields (Sign Up only) */}
-                        {isSignUp && (
-                            <>
-                                <View style={styles.inputContainer}>
-                                    <View style={styles.inputWrapper}>
-                                        <Icon name="person" size={20} color="#666" style={styles.inputIcon} />
-                                        <TextInput
-                                            style={styles.textInput}
-                                            placeholder="닉네임"
-                                            value={nickname}
-                                            onChangeText={setNickname}
-                                        />
-                                    </View>
-                                </View>
-                                
-                                <View style={styles.rowContainer}>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="성"
-                                                value={lastName}
-                                                onChangeText={setLastName}
-                                            />
-                                        </View>
-                                    </View>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="이름"
-                                                value={firstName}
-                                                onChangeText={setFirstName}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                                
-                                <View style={styles.inputContainer}>
-                                    <View style={styles.inputWrapper}>
-                                        <TextInput
-                                            style={styles.textInput}
-                                            placeholder="영문명 (예: JuEun)"
-                                            value={nameReading}
-                                            onChangeText={setNameReading}
-                                        />
-                                    </View>
-                                </View>
-                                
-                                <View style={styles.rowContainer}>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="나이"
-                                                value={age}
-                                                onChangeText={setAge}
-                                                keyboardType="number-pad"
-                                            />
-                                        </View>
-                                    </View>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.genderContainer}>
-                                            <TouchableOpacity 
-                                                style={[styles.genderButton, gender === 'male' && styles.genderButtonSelected]}
-                                                onPress={() => setGender('male')}
-                                            >
-                                                <Text style={[styles.genderButtonText, gender === 'male' && styles.genderButtonTextSelected]}>남성</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity 
-                                                style={[styles.genderButton, gender === 'female' && styles.genderButtonSelected]}
-                                                onPress={() => setGender('female')}
-                                            >
-                                                <Text style={[styles.genderButtonText, gender === 'female' && styles.genderButtonTextSelected]}>여성</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                                
-                                <View style={styles.rowContainer}>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.inputWrapper}>
-                                            <TextInput
-                                                style={styles.textInput}
-                                                placeholder="도시"
-                                                value={city}
-                                                onChangeText={setCity}
-                                            />
-                                        </View>
-                                    </View>
-                                    <View style={[styles.inputContainer, styles.halfWidth]}>
-                                        <View style={styles.genderContainer}>
-                                            <TouchableOpacity 
-                                                style={[styles.genderButton, nationality === 'KR' && styles.genderButtonSelected]}
-                                                onPress={() => setNationality('KR')}
-                                            >
-                                                <Text style={[styles.genderButtonText, nationality === 'KR' && styles.genderButtonTextSelected]}>Korea</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity 
-                                                style={[styles.genderButton, nationality === 'JP' && styles.genderButtonSelected]}
-                                                onPress={() => setNationality('JP')}
-                                            >
-                                                <Text style={[styles.genderButtonText, nationality === 'JP' && styles.genderButtonTextSelected]}>Japan</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
-                                </View>
-                                
-                                <View style={styles.inputContainer}>
-                                    <View style={styles.inputWrapper}>
-                                        <TextInput
-                                            style={styles.textInput}
-                                            placeholder="자기소개 (선택사항)"
-                                            value={description}
-                                            onChangeText={setDescription}
-                                            multiline={true}
-                                            numberOfLines={3}
-                                        />
-                                    </View>
-                                </View>
-                            </>
-                        )}
-
-                        {/* Submit Button */}
-                        <TouchableOpacity
-                            style={[styles.submitButton, loading && styles.submitButtonDisabled]}
-                            onPress={isSignUp ? signUpWithEmail : signInWithEmail}
-                            disabled={loading}
-                        >
-                            <Text style={styles.submitButtonText}>{loading ? "처리 중..." : isSignUp ? "회원가입" : "로그인"}</Text>
-                        </TouchableOpacity>
-
-                        {/* Toggle Auth Mode */}
-                        <View style={styles.toggleContainer}>
-                            <Text style={styles.toggleText}>
-                                {isSignUp ? "이미 계정이 있으신가요?" : "계정이 없으신가요?"}
-                            </Text>
-                            <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
-                                <Text style={styles.toggleButton}>{isSignUp ? "로그인" : "회원가입"}</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        {/* Social Login Placeholder */}
-                        {/*<View style={styles.socialContainer}>*/}
-                        {/*    <View style={styles.divider}>*/}
-                        {/*        <View style={styles.dividerLine} />*/}
-                        {/*        <Text style={styles.dividerText}>또는</Text>*/}
-                        {/*        <View style={styles.dividerLine} />*/}
-                        {/*    </View>*/}
-
-                        {/*    <TouchableOpacity style={styles.socialButton} onPress={() => Alert.alert("준비 중", "소셜 로그인 기능을 준비 중입니다.")}>*/}
-                        {/*        <Icon name="login" size={20} color="#666" />*/}
-                        {/*        <Text style={styles.socialButtonText}>소셜 로그인</Text>*/}
-                        {/*    </TouchableOpacity>*/}
-                        {/*</View>*/}
+                    <View>
+                        <InterestSection
+                            // lunchMessage=''
+                            // onPressButton={() => {
+                            //
+                            // }}
+                            // buttonText='사전 신청하기'
+                        />
                     </View>
+
+                    {/* Form */}
+                    {/*<View style={styles.formContainer}>*/}
+                    {/*    <Text style={styles.formTitle}>{isSignUp ? "회원가입" : "로그인"}</Text>*/}
+
+                    {/*    /!* Email Input *!/*/}
+                    {/*    <View style={styles.inputContainer}>*/}
+                    {/*        <View style={styles.inputWrapper}>*/}
+                    {/*            <Icon name="email" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*            <TextInput*/}
+                    {/*                style={styles.textInput}*/}
+                    {/*                placeholder="이메일을 입력하세요"*/}
+                    {/*                value={email}*/}
+                    {/*                onChangeText={setEmail}*/}
+                    {/*                keyboardType="email-address"*/}
+                    {/*                autoCapitalize="none"*/}
+                    {/*                autoCorrect={false}*/}
+                    {/*            />*/}
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+
+                    {/*    /!* Password Input *!/*/}
+                    {/*    <View style={styles.inputContainer}>*/}
+                    {/*        <View style={styles.inputWrapper}>*/}
+                    {/*            <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*            <TextInput*/}
+                    {/*                style={styles.textInput}*/}
+                    {/*                placeholder="비밀번호를 입력하세요"*/}
+                    {/*                value={password}*/}
+                    {/*                onChangeText={setPassword}*/}
+                    {/*                secureTextEntry={!showPassword}*/}
+                    {/*                autoCapitalize="none"*/}
+                    {/*            />*/}
+                    {/*            <TouchableOpacity*/}
+                    {/*                onPress={() => setShowPassword(!showPassword)}*/}
+                    {/*                style={styles.eyeButton}*/}
+                    {/*            >*/}
+                    {/*                <Icon*/}
+                    {/*                    name={showPassword ? "visibility" : "visibility-off"}*/}
+                    {/*                    size={20}*/}
+                    {/*                    color="#666"*/}
+                    {/*                />*/}
+                    {/*            </TouchableOpacity>*/}
+                    {/*        </View>*/}
+                    {/*    </View>*/}
+
+                    {/*    /!* Confirm Password Input (Sign Up only) *!/*/}
+                    {/*    {isSignUp && (*/}
+                    {/*        <View style={styles.inputContainer}>*/}
+                    {/*            <View style={styles.inputWrapper}>*/}
+                    {/*                <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*                <TextInput*/}
+                    {/*                    style={styles.textInput}*/}
+                    {/*                    placeholder="비밀번호를 다시 입력하세요"*/}
+                    {/*                    value={confirmPassword}*/}
+                    {/*                    onChangeText={setConfirmPassword}*/}
+                    {/*                    secureTextEntry={!showConfirmPassword}*/}
+                    {/*                    autoCapitalize="none"*/}
+                    {/*                />*/}
+                    {/*                <TouchableOpacity*/}
+                    {/*                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}*/}
+                    {/*                    style={styles.eyeButton}*/}
+                    {/*                >*/}
+                    {/*                    <Icon*/}
+                    {/*                        name={showConfirmPassword ? "visibility" : "visibility-off"}*/}
+                    {/*                        size={20}*/}
+                    {/*                        color="#666"*/}
+                    {/*                    />*/}
+                    {/*                </TouchableOpacity>*/}
+                    {/*            </View>*/}
+                    {/*        </View>*/}
+                    {/*    )}*/}
+
+                    {/*    /!* Profile Fields (Sign Up only) *!/*/}
+                    {/*    {isSignUp && (*/}
+                    {/*        <>*/}
+                    {/*            <View style={styles.inputContainer}>*/}
+                    {/*                <View style={styles.inputWrapper}>*/}
+                    {/*                    <Icon name="person" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*                    <TextInput*/}
+                    {/*                        style={styles.textInput}*/}
+                    {/*                        placeholder="닉네임"*/}
+                    {/*                        value={nickname}*/}
+                    {/*                        onChangeText={setNickname}*/}
+                    {/*                    />*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*            */}
+                    {/*            <View style={styles.rowContainer}>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.inputWrapper}>*/}
+                    {/*                        <TextInput*/}
+                    {/*                            style={styles.textInput}*/}
+                    {/*                            placeholder="성"*/}
+                    {/*                            value={lastName}*/}
+                    {/*                            onChangeText={setLastName}*/}
+                    {/*                        />*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.inputWrapper}>*/}
+                    {/*                        <TextInput*/}
+                    {/*                            style={styles.textInput}*/}
+                    {/*                            placeholder="이름"*/}
+                    {/*                            value={firstName}*/}
+                    {/*                            onChangeText={setFirstName}*/}
+                    {/*                        />*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*            */}
+                    {/*            <View style={styles.inputContainer}>*/}
+                    {/*                <View style={styles.inputWrapper}>*/}
+                    {/*                    <TextInput*/}
+                    {/*                        style={styles.textInput}*/}
+                    {/*                        placeholder="영문명 (예: JuEun)"*/}
+                    {/*                        value={nameReading}*/}
+                    {/*                        onChangeText={setNameReading}*/}
+                    {/*                    />*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*            */}
+                    {/*            <View style={styles.rowContainer}>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.inputWrapper}>*/}
+                    {/*                        <TextInput*/}
+                    {/*                            style={styles.textInput}*/}
+                    {/*                            placeholder="나이"*/}
+                    {/*                            value={age}*/}
+                    {/*                            onChangeText={setAge}*/}
+                    {/*                            keyboardType="number-pad"*/}
+                    {/*                        />*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.genderContainer}>*/}
+                    {/*                        <TouchableOpacity */}
+                    {/*                            style={[styles.genderButton, gender === 'male' && styles.genderButtonSelected]}*/}
+                    {/*                            onPress={() => setGender('male')}*/}
+                    {/*                        >*/}
+                    {/*                            <Text style={[styles.genderButtonText, gender === 'male' && styles.genderButtonTextSelected]}>남성</Text>*/}
+                    {/*                        </TouchableOpacity>*/}
+                    {/*                        <TouchableOpacity */}
+                    {/*                            style={[styles.genderButton, gender === 'female' && styles.genderButtonSelected]}*/}
+                    {/*                            onPress={() => setGender('female')}*/}
+                    {/*                        >*/}
+                    {/*                            <Text style={[styles.genderButtonText, gender === 'female' && styles.genderButtonTextSelected]}>여성</Text>*/}
+                    {/*                        </TouchableOpacity>*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*            */}
+                    {/*            <View style={styles.rowContainer}>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.inputWrapper}>*/}
+                    {/*                        <TextInput*/}
+                    {/*                            style={styles.textInput}*/}
+                    {/*                            placeholder="도시"*/}
+                    {/*                            value={city}*/}
+                    {/*                            onChangeText={setCity}*/}
+                    {/*                        />*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*                <View style={[styles.inputContainer, styles.halfWidth]}>*/}
+                    {/*                    <View style={styles.genderContainer}>*/}
+                    {/*                        <TouchableOpacity */}
+                    {/*                            style={[styles.genderButton, nationality === 'KR' && styles.genderButtonSelected]}*/}
+                    {/*                            onPress={() => setNationality('KR')}*/}
+                    {/*                        >*/}
+                    {/*                            <Text style={[styles.genderButtonText, nationality === 'KR' && styles.genderButtonTextSelected]}>Korea</Text>*/}
+                    {/*                        </TouchableOpacity>*/}
+                    {/*                        <TouchableOpacity */}
+                    {/*                            style={[styles.genderButton, nationality === 'JP' && styles.genderButtonSelected]}*/}
+                    {/*                            onPress={() => setNationality('JP')}*/}
+                    {/*                        >*/}
+                    {/*                            <Text style={[styles.genderButtonText, nationality === 'JP' && styles.genderButtonTextSelected]}>Japan</Text>*/}
+                    {/*                        </TouchableOpacity>*/}
+                    {/*                    </View>*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*            */}
+                    {/*            <View style={styles.inputContainer}>*/}
+                    {/*                <View style={styles.inputWrapper}>*/}
+                    {/*                    <TextInput*/}
+                    {/*                        style={styles.textInput}*/}
+                    {/*                        placeholder="자기소개 (선택사항)"*/}
+                    {/*                        value={description}*/}
+                    {/*                        onChangeText={setDescription}*/}
+                    {/*                        multiline={true}*/}
+                    {/*                        numberOfLines={3}*/}
+                    {/*                    />*/}
+                    {/*                </View>*/}
+                    {/*            </View>*/}
+                    {/*        </>*/}
+                    {/*    )}*/}
+
+                    {/*    /!* Submit Button *!/*/}
+                    {/*    <TouchableOpacity*/}
+                    {/*        style={[styles.submitButton, loading && styles.submitButtonDisabled]}*/}
+                    {/*        onPress={isSignUp ? signUpWithEmail : signInWithEmail}*/}
+                    {/*        disabled={loading}*/}
+                    {/*    >*/}
+                    {/*        <Text style={styles.submitButtonText}>{loading ? "처리 중..." : isSignUp ? "회원가입" : "로그인"}</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+
+                    {/*    /!* Toggle Auth Mode *!/*/}
+                    {/*    <View style={styles.toggleContainer}>*/}
+                    {/*        <Text style={styles.toggleText}>*/}
+                    {/*            {isSignUp ? "이미 계정이 있으신가요?" : "계정이 없으신가요?"}*/}
+                    {/*        </Text>*/}
+                    {/*        <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>*/}
+                    {/*            <Text style={styles.toggleButton}>{isSignUp ? "로그인" : "회원가입"}</Text>*/}
+                    {/*        </TouchableOpacity>*/}
+                    {/*    </View>*/}
+
+                    {/*    /!* Social Login Placeholder *!/*/}
+                    {/*    /!*<View style={styles.socialContainer}>*!/*/}
+                    {/*    /!*    <View style={styles.divider}>*!/*/}
+                    {/*    /!*        <View style={styles.dividerLine} />*!/*/}
+                    {/*    /!*        <Text style={styles.dividerText}>또는</Text>*!/*/}
+                    {/*    /!*        <View style={styles.dividerLine} />*!/*/}
+                    {/*    /!*    </View>*!/*/}
+
+                    {/*    /!*    <TouchableOpacity style={styles.socialButton} onPress={() => Alert.alert("준비 중", "소셜 로그인 기능을 준비 중입니다.")}>*!/*/}
+                    {/*    /!*        <Icon name="login" size={20} color="#666" />*!/*/}
+                    {/*    /!*        <Text style={styles.socialButtonText}>소셜 로그인</Text>*!/*/}
+                    {/*    /!*    </TouchableOpacity>*!/*/}
+                    {/*    /!*</View>*!/*/}
+                    {/*</View>*/}
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
