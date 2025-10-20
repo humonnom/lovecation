@@ -47,7 +47,7 @@ const HomeStack = () => {
         name="UserDetail"
         component={ProfileDetailPage}
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: "",
           headerTransparent: true,
           headerTintColor: "#333",
