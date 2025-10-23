@@ -3,7 +3,9 @@ import { useState } from "react"
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { useTranslation } from "react-i18next"
 import type { Profile } from "../../types"
+import dummyData from "./dummyData.json"
 
 const { width } = Dimensions.get("window")
 
@@ -11,19 +13,109 @@ interface ProfileDetailProps {
     onClose?: () => void
 }
 
-const descriptionDummy: Record<string, string> = {
-    femaleKR:"안녕하세요! 저는 일본에서 온 28세 여성입니다. 한국 문화와 음식을 정말 좋아해서 한국어도 열심히 공부하고 있어요. 여행과 사진 찍는 것을 좋아하고, 새로운 사람들을 만나는 것도 즐깁니다. 제 이상형은 유머러스하고 따뜻한 분이에요. 함께 카페 데이트나 영화 감상을 즐길 수 있는 분을 만나고 싶어요!",
-    femaleJP:"こんにちは！私は日本から来た28歳の女性です。韓国の文化と食べ物が大好きで、一生懸命韓国語を勉強しています。旅行と写真を撮ることが好きで、新しい人と出会うことも楽しんでいます。私の理想のタイプはユーモアがあり、温かい人です。一緒にカフェデートや映画鑑賞を楽しめる人に出会いたいです！",
-    maleKR:"안녕하세요! 저는 일본에서 온 30세 남성입니다. 한국 드라마와 음악을 좋아해서 한국어도 공부하고 있어요. 운동과 등산을 즐기고, 맛있는 음식을 찾는 것도 좋아합니다. 제 이상형은 이해심 많고 긍정적인 분이에요. 함께 여행이나 운동을 즐길 수 있는 분을 만나고 싶어요!",
-    maleJP:"こんにちは！私は日本から来た30歳の男性です。韓国のドラマと音楽が好きで、韓国語も勉強しています。運動と登山を楽しみ、美味しい食べ物を探すことも好きです。私の理想のタイプは理解があり、ポジティブな人です。一緒に旅行や運動を楽しめる人に出会いたいです！"
-}
+// const descriptionDummy: Record<string, string> = {
+//     femaleKR:"",
+//     femaleJP:"こんにちは！私は日本から来た28歳の女性です。韓国の文化と食べ物が大好きで、一生懸命韓国語を勉強しています。旅行と写真を撮ることが好きで、新しい人と出会うことも楽しんでいます。私の理想のタイプはユーモアがあり、温かい人です。一緒にカフェデートや映画鑑賞を楽しめる人に出会いたいです！",
+//     maleKR:"안녕하세요! 저는 일본에서 온 30세 남성입니다. 한국 드라마와 음악을 좋아해서 한국어도 공부하고 있어요. 운동과 등산을 즐기고, 맛있는 음식을 찾는 것도 좋아합니다. 제 이상형은 이해심 많고 긍정적인 분이에요. 함께 여행이나 운동을 즐길 수 있는 분을 만나고 싶어요!",
+//     maleJP:"こんにちは！私は日本から来た30歳の男性です。韓国のドラマと音楽が好きで、韓国語も勉強しています。運動と登山を楽しみ、美味しい食べ物を探すことも好きです。私の理想のタイプは理解があり、ポジティブな人です。一緒に旅行や運動を楽しめる人に出会いたいです！"
+// }
 
 export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
     const navigation = useNavigation();
     const route = useRoute();
+    const { t, i18n } = useTranslation();
     const user = (route.params as any)?.user as Profile | undefined;
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
     const [isKR, setIsKR] = useState(true)
+
+    console.log(user?.id);
+
+    // Get user detail data from dummyData
+    const userDetailData = user?.id ? dummyData[user.id as keyof typeof dummyData] : null;
+    const currentLanguage = i18n.language; // 'ko' or 'ja'
+
+    // Helper function to extract text without emoji (including flag emojis)
+    const getTextWithoutEmoji = (text: string) => {
+        // Remove all emojis including flag emojis (regional indicators)
+        return text.replace(/[\u{1F300}-\u{1F9FF}\u{1F1E0}-\u{1F1FF}]/gu, '').trim();
+    };
+
+    // Helper function to get emoji from text (including flag emojis)
+    const getEmoji = (text: string) => {
+        const match = text.match(/[\u{1F300}-\u{1F9FF}\u{1F1E0}-\u{1F1FF}]+/gu);
+        return match ? match.join('') : '';
+    };
+
+    // Language skills configuration
+    const languageSkillsConfig = [
+        { key: 'korean', labelKey: '한국어' },
+        { key: 'japanese', labelKey: '일본어' },
+        { key: 'english', labelKey: '영어' }
+    ];
+
+    // Get level text from level number
+    const getLevelText = (level: number) => {
+        const levelMap: Record<number, string> = {
+            1: '초급',
+            2: '초급',
+            3: '중급',
+            4: '고급',
+            5: '원어민'
+        };
+        return levelMap[level] || '초급';
+    };
+
+    // Lifestyle configuration
+    const lifestyleConfig = [
+        { key: 'drinking', icon: 'local-bar', labelKey: '음주' },
+        { key: 'smoking', icon: 'smoke-free', labelKey: '흡연' },
+        { key: 'exercise', icon: 'fitness-center', labelKey: '운동' },
+        { key: 'pet', icon: 'pets', labelKey: '반려동물' }
+    ];
+
+    // Future plans icons
+    const futurePlansIcons: Record<string, string> = {
+        'long_distance_ok': 'favorite',
+        'visit_often': 'flight',
+        'relocation_considering': 'home',
+        'long_distance_serious': 'favorite',
+        'visit_regularly': 'flight',
+        'relocation_possible': 'home',
+        'interested_in_life': 'home',
+        'date_in_city': 'favorite',
+        'weekend_travel': 'flight',
+        'settled': 'home',
+        'serious_relationship': 'favorite',
+        'travel_together': 'flight',
+        'stable_life': 'home',
+        'long_distance_want': 'favorite',
+        'visit_korea_often': 'flight',
+        'working_holiday': 'home',
+        'visit_japan_often': 'flight',
+        'life_in_japan': 'home',
+        'get_to_know_slowly': 'favorite',
+        'plan_to_visit': 'flight',
+        'want_to_experience': 'home',
+        'welcome_visit': 'flight',
+        'living_in_kyoto': 'home'
+    };
+
+    // Cultural preference labels based on nationality
+    const getCulturalPreferenceLabels = (nationality: string) => {
+        if (nationality === 'JP') {
+            return [
+                { key: 'food', emoji: '🍗', labelKey: '한국 음식' },
+                { key: 'entertainment', emoji: '🎵', labelKey: 'K-pop/드라마' },
+                { key: 'culture', emoji: '🇰🇷', labelKey: '한국 문화 이해도' }
+            ];
+        } else {
+            return [
+                { key: 'food', emoji: '🍜', labelKey: '일본 음식' },
+                { key: 'entertainment', emoji: '🎬', labelKey: '애니메이션/만화' },
+                { key: 'culture', emoji: '🇯🇵', labelKey: '일본 문화 이해도' }
+            ];
+        }
+    };
 
     const photos = [
         { uri: "/placeholder.svg?height=500&width=400" },
@@ -31,8 +123,6 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
         { uri: "/placeholder.svg?height=500&width=400" },
         { uri: "/placeholder.svg?height=500&width=400" },
     ]
-
-    const interests = ["K드라마", "여행", "카페", "요리", "한국어공부", "사진", "음악"]
 
     const handleClose = () => {
         if (onClose) {
@@ -52,7 +142,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                    <Text>유저 정보를 불러올 수 없습니다</Text>
+                    <Text>{t('userDetail.errorLoadingUser')}</Text>
                 </View>
             </SafeAreaView>
         );
@@ -84,14 +174,14 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
 
                     {/* Demo Badge */}
                     <View style={styles.demoBadge}>
-                        <Text style={styles.demoBadgeText}>DEMO</Text>
+                        <Text style={styles.demoBadgeText}>{t('userDetail.demo')}</Text>
                     </View>
 
                     {/* Online Status */}
                     {user.is_online && (
                         <View style={styles.onlineStatus}>
                             <View style={styles.onlineDot} />
-                            <Text style={styles.onlineText}>온라인</Text>
+                            <Text style={styles.onlineText}>{t('userDetail.online')}</Text>
                         </View>
                     )}
 
@@ -113,7 +203,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
                         {user.age && (
                             <View style={styles.infoItem}>
                                 <Icon name="cake" size={18} color="#666" />
-                                <Text style={styles.infoText}>{user.age}세</Text>
+                                <Text style={styles.infoText}>{user.age}{t('userDetail.age')}</Text>
                             </View>
                         )}
                         {user.city && user.nationality && (
@@ -126,148 +216,157 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
                 </View>
 
                 {/* About Me */}
-                {user.description && (
+                {userDetailData?.descriptions && (
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
-                            <Text style={styles.sectionTitle}>About Me</Text>
+                            <Text style={styles.sectionTitle}>{t('userDetail.aboutMe')}</Text>
                             <TouchableOpacity style={styles.translateButton} onPress={() => setIsKR(!isKR)}>
                                 <Icon name="translate" size={16} color="#EE9CA7" />
                                 <Text style={styles.translateButtonText}>{isKR? "KR" : "JP"}</Text>
                             </TouchableOpacity>
                         </View>
                         <Text style={styles.aboutText}>
-                            {descriptionDummy[`${user.gender}${isKR ? "JP" : "KR"}`]}
+                            {isKR ? userDetailData.descriptions.ko : userDetailData.descriptions.ja}
                         </Text>
                         <Text style={styles.translationNote}>
-                            <Icon name="info-outline" size={12} color="#999" /> 이 프로필은 자동 번역되었습니다
+                            <Icon name="info-outline" size={12} color="#999" /> {t('userDetail.translationNote')}
                         </Text>
                     </View>
                 )}
 
                 {/* Interests */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>관심사 & 취미</Text>
-                    <View style={styles.tagsContainer}>
-                        {interests.map((interest, index) => (
-                            <View key={index} style={styles.tag}>
-                                <Text style={styles.tagText}>#{interest}</Text>
-                            </View>
-                        ))}
+                {userDetailData?.interests && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.interests')}</Text>
+                        <View style={styles.tagsContainer}>
+                            {userDetailData.interests.map((interestKey, index) => {
+                                const translated = t(`userDetail.interestsList.${interestKey}`);
+                                return (
+                                    <View key={index} style={styles.tag}>
+                                        <Text style={styles.tagText}>#{translated}</Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
                     </View>
-                </View>
+                )}
 
                 {/* Language Skills */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>언어 능력</Text>
-                    <View style={styles.languageItem}>
-                        <Text style={styles.languageLabel}>한국어</Text>
-                        <View style={styles.starsContainer}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <Icon key={star} name="star" size={18} color={star <= 3 ? "#FFB800" : "#E0E0E0"} />
-                            ))}
-                        </View>
-                        <Text style={styles.languageLevel}>중급</Text>
+                {userDetailData?.languageSkills && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.languageSkills')}</Text>
+                        {languageSkillsConfig.map((langConfig) => {
+                            const level = userDetailData.languageSkills[langConfig.key as keyof typeof userDetailData.languageSkills];
+                            if (!level) return null;
+
+                            const levelText = getLevelText(level);
+                            const translatedLanguage = t(`userDetail.languages.${langConfig.labelKey}`, langConfig.labelKey);
+                            const translatedLevel = t(`userDetail.levels.${levelText}`, levelText);
+
+                            return (
+                                <View key={langConfig.key} style={styles.languageItem}>
+                                    <Text style={styles.languageLabel}>
+                                        {translatedLanguage}
+                                    </Text>
+                                    <View style={styles.starsContainer}>
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <Icon key={star} name="star" size={18} color={star <= level ? "#FFB800" : "#E0E0E0"} />
+                                        ))}
+                                    </View>
+                                    <Text style={styles.languageLevel}>
+                                        {translatedLevel}
+                                    </Text>
+                                </View>
+                            );
+                        })}
                     </View>
-                    <View style={styles.languageItem}>
-                        <Text style={styles.languageLabel}>일본어</Text>
-                        <View style={styles.starsContainer}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <Icon key={star} name="star" size={18} color="#FFB800" />
-                            ))}
-                        </View>
-                        <Text style={styles.languageLevel}>원어민</Text>
-                    </View>
-                    <View style={styles.languageItem}>
-                        <Text style={styles.languageLabel}>영어</Text>
-                        <View style={styles.starsContainer}>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <Icon key={star} name="star" size={18} color={star <= 2 ? "#FFB800" : "#E0E0E0"} />
-                            ))}
-                        </View>
-                        <Text style={styles.languageLevel}>초급</Text>
-                    </View>
-                </View>
+                )}
 
                 {/* Cultural Preferences */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>문화 선호도</Text>
-                    <View style={styles.preferenceItem}>
-                        <Text style={styles.preferenceLabel}>🍗 한국 음식</Text>
-                        <View style={styles.preferenceBar}>
-                            <View style={[styles.preferenceBarFill, { width: "90%" }]} />
-                        </View>
+                {userDetailData?.culturalPreferences && user?.nationality && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.culturalPreferences')}</Text>
+                        {getCulturalPreferenceLabels(user.nationality).map((item) => {
+                            const preferences = userDetailData.culturalPreferences[user.nationality as keyof typeof userDetailData.culturalPreferences];
+                            const percentage = preferences?.[item.key as keyof typeof preferences];
+                            if (percentage === undefined) return null;
+
+                            const translatedText = t(`userDetail.culturalLabels.${item.labelKey}`, item.labelKey);
+                            return (
+                                <View key={item.key} style={styles.preferenceItem}>
+                                    <Text style={styles.preferenceLabel}>{item.emoji} {translatedText}</Text>
+                                    <View style={styles.preferenceBar}>
+                                        <View style={[styles.preferenceBarFill, { width: `${percentage}%` }]} />
+                                    </View>
+                                </View>
+                            );
+                        })}
                     </View>
-                    <View style={styles.preferenceItem}>
-                        <Text style={styles.preferenceLabel}>🎵 K-pop/드라마</Text>
-                        <View style={styles.preferenceBar}>
-                            <View style={[styles.preferenceBarFill, { width: "85%" }]} />
-                        </View>
-                    </View>
-                    <View style={styles.preferenceItem}>
-                        <Text style={styles.preferenceLabel}>🇰🇷 한국 문화 이해도</Text>
-                        <View style={styles.preferenceBar}>
-                            <View style={[styles.preferenceBarFill, { width: "80%" }]} />
-                        </View>
-                    </View>
-                </View>
+                )}
 
                 {/* Lifestyle */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>라이프스타일</Text>
-                    <View style={styles.lifestyleGrid}>
-                        <View style={styles.lifestyleItem}>
-                            <Icon name="local-bar" size={24} color="#666" />
-                            <Text style={styles.lifestyleLabel}>음주</Text>
-                            <Text style={styles.lifestyleValue}>가끔</Text>
-                        </View>
-                        <View style={styles.lifestyleItem}>
-                            <Icon name="smoke-free" size={24} color="#666" />
-                            <Text style={styles.lifestyleLabel}>흡연</Text>
-                            <Text style={styles.lifestyleValue}>안함</Text>
-                        </View>
-                        <View style={styles.lifestyleItem}>
-                            <Icon name="fitness-center" size={24} color="#666" />
-                            <Text style={styles.lifestyleLabel}>운동</Text>
-                            <Text style={styles.lifestyleValue}>주 2-3회</Text>
-                        </View>
-                        <View style={styles.lifestyleItem}>
-                            <Icon name="pets" size={24} color="#666" />
-                            <Text style={styles.lifestyleLabel}>반려동물</Text>
-                            <Text style={styles.lifestyleValue}>고양이 🐱</Text>
+                {userDetailData?.lifestyle && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.lifestyle')}</Text>
+                        <View style={styles.lifestyleGrid}>
+                            {lifestyleConfig.map((config) => {
+                                const value = userDetailData.lifestyle[config.key as keyof typeof userDetailData.lifestyle];
+                                if (!value) return null;
+
+                                const translatedLabel = t(`userDetail.lifestyleLabels.${config.labelKey}`, config.labelKey);
+                                const translatedValue = t(`userDetail.lifestyleValues.${value}`, value);
+
+                                return (
+                                    <View key={config.key} style={styles.lifestyleItem}>
+                                        <Icon name={config.icon} size={24} color="#666" />
+                                        <Text style={styles.lifestyleLabel}>{translatedLabel}</Text>
+                                        <Text style={styles.lifestyleValue}>{translatedValue}</Text>
+                                    </View>
+                                );
+                            })}
                         </View>
                     </View>
-                </View>
+                )}
 
                 {/* Future Plans */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>미래 계획</Text>
-                    <View style={styles.planItem}>
-                        <Icon name="favorite" size={20} color="#EE9CA7" />
-                        <Text style={styles.planText}>장거리 연애 가능해요</Text>
+                {userDetailData?.futurePlans && user?.nationality && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.futurePlans')}</Text>
+                        {userDetailData.futurePlans[user.nationality as keyof typeof userDetailData.futurePlans]?.map((planKey, index) => {
+                            const icon = futurePlansIcons[planKey] || 'favorite';
+                            const translatedText = t(`userDetail.futurePlansList.${user.nationality}.${planKey}`, planKey);
+
+                            return (
+                                <View key={index} style={styles.planItem}>
+                                    <Icon name={icon} size={20} color="#EE9CA7" />
+                                    <Text style={styles.planText}>{translatedText}</Text>
+                                </View>
+                            );
+                        })}
                     </View>
-                    <View style={styles.planItem}>
-                        <Icon name="flight" size={20} color="#EE9CA7" />
-                        <Text style={styles.planText}>{user.nationality === 'JP' ? "한국 방문 자주 해요" : "일본 방문 자주 해요"} </Text>
-                    </View>
-                    <View style={styles.planItem}>
-                        <Icon name="home" size={20} color="#EE9CA7" />
-                        <Text style={styles.planText}>{user.nationality === 'JP' ? "나중에 한국 이주 고려 중" : "나중에 일본 이주 고려 중"}</Text>
-                    </View>
-                </View>
+                )}
 
                 {/* Ideal Type */}
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>이상형</Text>
-                    <Text style={styles.idealTypeText}>• 나이 범위: 24-32세</Text>
-                    <Text style={styles.idealTypeText}>• 성격: 유머러스하고 따뜻한 분</Text>
-                    <Text style={styles.idealTypeText}>• 데이트 스타일: 카페 데이트, 영화 감상</Text>
-                </View>
+                {userDetailData?.idealType && (
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>{t('userDetail.idealType')}</Text>
+                        <Text style={styles.idealTypeText}>
+                            • {t('userDetail.idealTypeLabels.ageRange')}: {userDetailData.idealType.ageRange}{t('userDetail.age')}
+                        </Text>
+                        <Text style={styles.idealTypeText}>
+                            • {t('userDetail.idealTypeLabels.personality')}: {t(`userDetail.idealTypeData.personalities.${userDetailData.idealType.personality}`, userDetailData.idealType.personality)}
+                        </Text>
+                        <Text style={styles.idealTypeText}>
+                            • {t('userDetail.idealTypeLabels.dateStyle')}: {t(`userDetail.idealTypeData.dateStyles.${userDetailData.idealType.dateStyle}`, userDetailData.idealType.dateStyle)}
+                        </Text>
+                    </View>
+                )}
 
                 {/* Demo Notice */}
                 <View style={styles.demoNotice}>
                     <Icon name="info" size={20} color="#FF9800" />
                     <Text style={styles.demoNoticeText}>
-                        실제 서비스에서는 실시간 번역 제공 및 더 많은 프로필을 확인할 수 있습니다
+                        {t('userDetail.demoNotice')}
                     </Text>
                 </View>
 
