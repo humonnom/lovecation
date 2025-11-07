@@ -1,6 +1,6 @@
 import * as React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity, Linking, Alert } from "react-native";
-import { useTranslation } from "react-i18next";
+import {Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {useTranslation} from "react-i18next";
 import Icon from "react-native-vector-icons/Ionicons";
 
 interface InterestedUser {
@@ -39,17 +39,22 @@ const renderStackedAvatars = () => {
   const displayUsers = mockInterestedUsers.slice(0, 4);
   const remainingCount = Math.max(0, mockInterestedUsers.length - 4);
 
+
   return (
     <View style={styles.stackedAvatars}>
-      {displayUsers.map((user, index) => (
-        <View
-          key={user.id}
-          style={[styles.avatarContainer, { left: index * 20 }]}
-        >
-          <Image source={user.image} style={styles.blurredAvatar} />
-          <View style={styles.blurOverlay} />
-        </View>
-      ))}
+      {displayUsers.map((user, index) => {
+          console.log(user.image);
+
+          return (
+              <View
+                  key={user.id}
+                  style={[styles.avatarContainer, { left: index * 20 }]}
+              >
+                  <Image source={user.image} style={styles.blurredAvatar} />
+                  <View style={styles.blurOverlay} />
+              </View>
+          )
+      })}
       {remainingCount > 0 && (
         <View
           style={[

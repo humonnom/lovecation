@@ -1,11 +1,12 @@
 import * as React from "react";
-import { View, ActivityIndicator, Text, StyleSheet } from "react-native";
+import { View, ScrollView, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Header } from "../../components/Header";
 import { UserGrid } from "./UserGrid";
 import { useProfiles } from "../../hooks/queries";
 import { useAuth } from "../../contexts/AuthContext";
 import Locale from "../../components/Locale";
+import { UserCardSkeleton } from "../../components/skeletons";
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
@@ -30,10 +31,13 @@ export const HomeScreen = () => {
           title={t('home.title')}
           subtitle={t('home.subtitle')}
         />
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#EE9CA7" />
-          <Text style={styles.loadingText}>{t('home.loadingProfiles')}</Text>
-        </View>
+        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+          <View style={styles.userGrid}>
+            {Array.from({ length: 6 }).map((_, index) => (
+              <UserCardSkeleton key={index} />
+            ))}
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -69,16 +73,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FDFDFD"
   },
-  loadingContainer: {
+  scrollView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 16
   },
-  loadingText: {
-    fontSize: 16,
-    color: "#666",
-    fontWeight: "500"
+  userGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    justifyContent: "space-between",
   },
   errorContainer: {
     flex: 1,
