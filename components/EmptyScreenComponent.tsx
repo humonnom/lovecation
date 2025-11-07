@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { useTranslation } from "react-i18next";
+import {Image, SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {useTranslation} from "react-i18next";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { InterestSection } from "./InterestSection";
-import { Header } from "./Header";
+import {InterestSection} from "./InterestSection";
+import {Header} from "./Header";
 
 interface EmptyScreenComponentProps {
   onNavigateToProfile: () => void;
@@ -28,7 +28,11 @@ export const EmptyScreenComponent = ({
 
       <View style={styles.content}>
         <View style={styles.iconContainer}>
-          <Icon name={icon} size={80} color='#FFCBD2' />
+            <Image
+                source={require("../../assets/icon.png")}
+                style={styles.logoImage}
+                resizeMode="contain"
+            />
         </View>
 
         <Text style={styles.mainTitle}>{t('common.featureInProgress', { feature: featureName })}</Text>
@@ -87,6 +91,10 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
     marginBottom: 24,
+  },
+  logoImage: {
+    width: 120,
+    height: 120,
   },
   mainTitle: {
     fontSize: 24,
