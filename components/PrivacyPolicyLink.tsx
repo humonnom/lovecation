@@ -8,7 +8,11 @@ interface PrivacyPolicyLinkProps {
     textAfter?: string
     fontSize?: number
     align?: "left" | "center" | "right"
-    url?: string
+}
+
+const links = {
+    ko: "https://pear-capricorn-258.notion.site/Lovecation-2a488780379980e8bca2c9f9a8da544a?pvs=73",
+    ja: "https://pear-capricorn-258.notion.site/2a8887803799800b82cce9b288519841?pvs=74"
 }
 
 export const PrivacyPolicyLink = ({
@@ -16,10 +20,10 @@ export const PrivacyPolicyLink = ({
                                       textAfter = "",
                                       fontSize = 13,
                                       align = "center",
-                                      url = "https://pear-capricorn-258.notion.site/Lovecation-2a488780379980e8bca2c9f9a8da544a?pvs=73",
                                   }: PrivacyPolicyLinkProps) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const handlePress = async () => {
+        const url = i18n.language === "ko" ? links.ko : links.ja;
         try {
             const supported = await Linking.canOpenURL(url)
             if (supported) {

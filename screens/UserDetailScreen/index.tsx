@@ -1,12 +1,12 @@
 import * as React from "react"
-import { useState } from "react"
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions } from "react-native"
+import {useState} from "react"
+import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import Icon from "react-native-vector-icons/MaterialIcons"
-import { useNavigation, useRoute } from "@react-navigation/native"
-import { useTranslation } from "react-i18next"
-import type { Profile } from "../../types"
+import {useNavigation, useRoute} from "@react-navigation/native"
+import {useTranslation} from "react-i18next"
+import type {Profile} from "../../types"
 import dummyData from "./dummyData.json"
-import { UserDetailSkeleton } from "../../components/skeletons"
+import {UserDetailSkeleton} from "../../components/skeletons"
 
 const { width } = Dimensions.get("window")
 
@@ -27,7 +27,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
     const { t, i18n } = useTranslation();
     const user = (route.params as any)?.user as Profile | undefined;
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
-    const [isKR, setIsKR] = useState(true)
+    const [isKR, setIsKR] = useState(i18n.language === 'ko')
     const [isLoading, setIsLoading] = useState(true)
 
     // Simulate loading state for skeleton
@@ -238,7 +238,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
                             <Text style={styles.sectionTitle}>{t('userDetail.aboutMe')}</Text>
                             <TouchableOpacity style={styles.translateButton} onPress={() => setIsKR(!isKR)}>
                                 <Icon name="translate" size={16} color="#EE9CA7" />
-                                <Text style={styles.translateButtonText}>{isKR? "KR" : "JP"}</Text>
+                                <Text style={styles.translateButtonText}>{isKR? "JP":"KR"}</Text>
                             </TouchableOpacity>
                         </View>
                         <Text style={styles.aboutText}>
