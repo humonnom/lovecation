@@ -11,7 +11,7 @@ import {
     Platform,
     ScrollView,
 } from "react-native"
-import { MaterialIcons as Icon } from "@expo/vector-icons"
+import Icon from "react-native-vector-icons/MaterialIcons"
 import {useState} from "react";
 import {supabase} from "../../lib/supabase";
 import {InterestSection} from "../../components/InterestSection";

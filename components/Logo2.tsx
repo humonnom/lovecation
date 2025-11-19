@@ -1,6 +1,6 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native"
-import { MaterialIcons } from "@expo/vector-icons"
+import Icon from "react-native-vector-icons/MaterialIcons"
 
 interface MapHeartIconProps {
     size?: number
@@ -12,7 +12,7 @@ export const MapHeartIcon = ({ size = 48, pinColor = "#EE9CA7", heartColor = "#F
     return (
         <View style={[styles.container, { width: size, height: size }]}>
             {/* 지도 핀 아이콘 */}
-            <MaterialIcons name="place" size={size} color={pinColor} style={styles.pinIcon} />
+            <Icon name="place" size={size} color={pinColor} style={styles.pinIcon} />
 
             {/* 거꾸로 된 하트 아이콘 */}
             <View
@@ -23,7 +23,7 @@ export const MapHeartIcon = ({ size = 48, pinColor = "#EE9CA7", heartColor = "#F
                     },
                 ]}
             >
-                <MaterialIcons name="favorite" size={size * 0.4} color={heartColor} style={styles.heartIcon} />
+                <Icon name="favorite" size={size * 0.4} color={heartColor} style={styles.heartIcon} />
             </View>
         </View>
     )

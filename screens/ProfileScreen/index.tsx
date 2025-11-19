@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useTranslation } from "react-i18next";
-import { MaterialIcons as Icon } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { InterestSection } from "../../components/InterestSection";
 import { Header } from "../../components/Header";
 import {supabase} from "../../lib/supabase";

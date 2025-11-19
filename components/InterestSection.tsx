@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Alert, Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useTranslation} from "react-i18next";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/Ionicons";
 import {PrivacyPolicyLink} from "./PrivacyPolicyLink";
 
 interface InterestedUser {
@@ -134,9 +134,9 @@ export const InterestSection = (props: InterestSectionProps) => {
           style={styles.profileButton}
           onPress={handleTypeformPress}
         >
-          <Ionicons name='person' size={20} color='white' />
+          <Icon name='person' size={20} color='white' />
           <Text style={styles.profileButtonText}>{t('interest.buttonText')}</Text>
-          <Ionicons name='arrow-forward' size={20} color='white' />
+          <Icon name='arrow-forward' size={20} color='white' />
         </TouchableOpacity>
       {/*)}*/}
     </View>
