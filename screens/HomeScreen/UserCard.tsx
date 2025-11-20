@@ -1,9 +1,9 @@
 import * as React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import type { Profile } from "../../types";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigation } from "@react-navigation/native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {MaterialIcons} from "@expo/vector-icons";
+import type {Profile} from "../../types";
+import {useAuth} from "../../contexts/AuthContext";
+import {useNavigation} from "@react-navigation/native";
 
 interface UserCardProps {
   user: Profile;
@@ -23,7 +23,7 @@ export const UserCard = ({ user, onLikeToggle }: UserCardProps) => {
   };
 
   const handleCardPress = () => {
-    console.log(`프로필 보기: ${user.first_name}`);
+    // console.log(`프로필 보기: ${user.first_name}`);
     //@ts-ignore NOTE: 나중에 해결
     navigation.navigate("UserDetail" as never, { user } as never);
   };

@@ -1,17 +1,9 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Alert,
-} from "react-native";
-import { useTranslation } from "react-i18next";
-import { MaterialIcons } from "@expo/vector-icons";
-import { InterestSection } from "../../components/InterestSection";
-import { Header } from "../../components/Header";
+import {Alert, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,} from "react-native";
+import {useTranslation} from "react-i18next";
+import {MaterialIcons} from "@expo/vector-icons";
+import {InterestSection} from "../../components/InterestSection";
+import {Header} from "../../components/Header";
 import {supabase} from "../../lib/supabase";
 import {useUserProfile} from "../../hooks/queries";
 
@@ -66,7 +58,7 @@ export const ProfileScreen = () => {
             style={styles.profileImage}
           />
           <TouchableOpacity style={styles.editButton}>
-            <Icon name='edit' size={16} color='#666' />
+            <MaterialIcons name='edit' size={16} color='#666' />
           </TouchableOpacity>
         </View>
         <Text style={styles.profileName}>
@@ -111,7 +103,7 @@ export const ProfileScreen = () => {
 
       <View style={styles.logoutContainer}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Icon name="logout" size={20} color="#666" />
+          <MaterialIcons name="logout" size={20} color="#666" />
           <Text style={styles.logoutText}>{t('profile.logout')}</Text>
         </TouchableOpacity>
       </View>

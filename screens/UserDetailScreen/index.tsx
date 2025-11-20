@@ -4,7 +4,7 @@ import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, Touchable
 import {MaterialIcons} from "@expo/vector-icons"
 import {useNavigation, useRoute} from "@react-navigation/native"
 import {useTranslation} from "react-i18next"
-import type {Profile, MaterialIconName} from "../../types"
+import type {MaterialIconName, Profile} from "../../types"
 import dummyData from "./dummyData.json"
 import {UserDetailSkeleton} from "../../components/skeletons"
 
@@ -39,7 +39,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
         return () => clearTimeout(timer);
     }, [])
 
-    console.log(user?.id);
+    // console.log(user?.id);
 
     // Get user detail data from dummyData
     const userDetailData = user?.id ? dummyData[user.id as keyof typeof dummyData] : null;
