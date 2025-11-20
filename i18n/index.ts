@@ -1,7 +1,7 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next} from 'react-i18next';
 import * as Localization from 'expo-localization';
-import { LOCALES } from './constants';
+import {LOCALES} from './constants';
 import ko from './locales/ko.json';
 import ja from './locales/ja.json';
 
@@ -29,7 +29,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    compatibilityJSON: 'v3', // React Native에서 필요
+    compatibilityJSON: 'v4', // React Native에서 필요
   });
 
 export default i18n;

@@ -10,6 +10,7 @@ export const initSentry = () => {
     return;
   }
 
+  // TODO: env 가져다쓸 때 형식 체크하기
   const dsn = process.env.SENTRY_DSN;
 
   // DSN이 설정되지 않았거나 플레이스홀더인 경우 초기화하지 않음
