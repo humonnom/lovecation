@@ -172,7 +172,7 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
                     <MaterialIcons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
                 {/*<TouchableOpacity style={styles.moreButton}>*/}
-                {/*    <Icon name="more-vert" size={24} color="#333" />*/}
+                {/*    <MaterialIcons name="more-vert" size={24} color="#333" />*/}
                 {/*</TouchableOpacity>*/}
             </View>
 
@@ -392,16 +392,16 @@ export const ProfileDetailPage = ({ onClose }: ProfileDetailProps) => {
             {/* Action Buttons */}
             <View style={styles.actionButtons}>
                 {/*<TouchableOpacity style={styles.actionButton}>*/}
-                {/*    <Icon name="close" size={32} color="#FF6B6B" />*/}
+                {/*    <MaterialIcons name="close" size={32} color="#FF6B6B" />*/}
                 {/*</TouchableOpacity>*/}
                 {/*<TouchableOpacity style={styles.actionButton}>*/}
-                {/*    <Icon name="star" size={32} color="#FFB800" />*/}
+                {/*    <MaterialIcons name="star" size={32} color="#FFB800" />*/}
                 {/*</TouchableOpacity>*/}
                 {/*<TouchableOpacity style={[styles.actionButton, styles.likeButton]}>*/}
-                {/*    <Icon name="favorite" size={32} color="white" />*/}
+                {/*    <MaterialIcons name="favorite" size={32} color="white" />*/}
                 {/*</TouchableOpacity>*/}
                 {/*<TouchableOpacity style={styles.actionButton}>*/}
-                {/*    <Icon name="chat-bubble" size={32} color="#EE9CA7" />*/}
+                {/*    <MaterialIcons name="chat-bubble" size={32} color="#EE9CA7" />*/}
                 {/*</TouchableOpacity>*/}
             </View>
         </SafeAreaView>

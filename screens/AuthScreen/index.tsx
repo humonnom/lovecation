@@ -1,18 +1,7 @@
 import * as React from 'react';
-import {
-    Alert,
-    StyleSheet,
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    SafeAreaView,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-} from "react-native"
-import Icon from "react-native-vector-icons/MaterialIcons"
-import {useState} from "react";
+import {useState} from 'react';
+import {Alert, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View,} from "react-native"
+import {MaterialIcons} from "@expo/vector-icons";
 import {supabase} from "../../lib/supabase";
 import {InterestSection} from "../../components/InterestSection";
 
@@ -140,7 +129,7 @@ export const AuthScreen = () =>  {
                     {/* Header */}
                     <View style={styles.header}>
                         <View style={styles.logoContainer}>
-                            <Icon name="favorite" size={40} color="#EE9CA7" />
+                            <MaterialIcons name="favorite" size={40} color="#EE9CA7" />
                         </View>
                         <Text style={styles.title}>Long Vacation</Text>
                         <Text style={styles.subtitle}>새로운 인연을 만나보세요</Text>
@@ -163,7 +152,7 @@ export const AuthScreen = () =>  {
                     {/*    /!* Email Input *!/*/}
                     {/*    <View style={styles.inputContainer}>*/}
                     {/*        <View style={styles.inputWrapper}>*/}
-                    {/*            <Icon name="email" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*            <MaterialIcons name="email" size={20} color="#666" style={styles.inputIcon} />*/}
                     {/*            <TextInput*/}
                     {/*                style={styles.textInput}*/}
                     {/*                placeholder="이메일을 입력하세요"*/}
@@ -179,7 +168,7 @@ export const AuthScreen = () =>  {
                     {/*    /!* Password Input *!/*/}
                     {/*    <View style={styles.inputContainer}>*/}
                     {/*        <View style={styles.inputWrapper}>*/}
-                    {/*            <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*            <MaterialIcons name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
                     {/*            <TextInput*/}
                     {/*                style={styles.textInput}*/}
                     {/*                placeholder="비밀번호를 입력하세요"*/}
@@ -192,7 +181,7 @@ export const AuthScreen = () =>  {
                     {/*                onPress={() => setShowPassword(!showPassword)}*/}
                     {/*                style={styles.eyeButton}*/}
                     {/*            >*/}
-                    {/*                <Icon*/}
+                    {/*                <MaterialIcons*/}
                     {/*                    name={showPassword ? "visibility" : "visibility-off"}*/}
                     {/*                    size={20}*/}
                     {/*                    color="#666"*/}
@@ -205,7 +194,7 @@ export const AuthScreen = () =>  {
                     {/*    {isSignUp && (*/}
                     {/*        <View style={styles.inputContainer}>*/}
                     {/*            <View style={styles.inputWrapper}>*/}
-                    {/*                <Icon name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*                <MaterialIcons name="lock" size={20} color="#666" style={styles.inputIcon} />*/}
                     {/*                <TextInput*/}
                     {/*                    style={styles.textInput}*/}
                     {/*                    placeholder="비밀번호를 다시 입력하세요"*/}
@@ -218,7 +207,7 @@ export const AuthScreen = () =>  {
                     {/*                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}*/}
                     {/*                    style={styles.eyeButton}*/}
                     {/*                >*/}
-                    {/*                    <Icon*/}
+                    {/*                    <MaterialIcons*/}
                     {/*                        name={showConfirmPassword ? "visibility" : "visibility-off"}*/}
                     {/*                        size={20}*/}
                     {/*                        color="#666"*/}
@@ -233,7 +222,7 @@ export const AuthScreen = () =>  {
                     {/*        <>*/}
                     {/*            <View style={styles.inputContainer}>*/}
                     {/*                <View style={styles.inputWrapper}>*/}
-                    {/*                    <Icon name="person" size={20} color="#666" style={styles.inputIcon} />*/}
+                    {/*                    <MaterialIcons name="person" size={20} color="#666" style={styles.inputIcon} />*/}
                     {/*                    <TextInput*/}
                     {/*                        style={styles.textInput}*/}
                     {/*                        placeholder="닉네임"*/}
@@ -379,7 +368,7 @@ export const AuthScreen = () =>  {
                     {/*    /!*    </View>*!/*/}
 
                     {/*    /!*    <TouchableOpacity style={styles.socialButton} onPress={() => Alert.alert("준비 중", "소셜 로그인 기능을 준비 중입니다.")}>*!/*/}
-                    {/*    /!*        <Icon name="login" size={20} color="#666" />*!/*/}
+                    {/*    /!*        <MaterialIcons name="login" size={20} color="#666" />*!/*/}
                     {/*    /!*        <Text style={styles.socialButtonText}>소셜 로그인</Text>*!/*/}
                     {/*    /!*    </TouchableOpacity>*!/*/}
                     {/*    /!*</View>*!/*/}

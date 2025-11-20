@@ -81,7 +81,7 @@ export const ProfileScreen = () => {
         //       onPress={handleLaunchRequest}
         //       disabled={hasRequestedLaunch}
         //     >
-        //       <Icon
+        //       <MaterialIcons
         //         name={hasRequestedLaunch ? "check-circle" : "notifications"}
         //         size={20}
         //         color={hasRequestedLaunch ? "#4CAF50" : "white"}
