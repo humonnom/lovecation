@@ -5,8 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import Toast from 'react-native-toast-message';
 import './i18n';
 import { HomeScreen } from "./screens/HomeScreen";
 import { ProfileScreen } from "./screens/ProfileScreen";
@@ -14,6 +15,13 @@ import { ProfileDetailPage } from "./screens/UserDetailScreen";
 import { EmptyScreenComponent } from "./components/EmptyScreenComponent";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { AuthScreen } from "./screens/AuthScreen";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { initSentry } from "./lib/sentry";
+import { handleQueryError } from "./lib/errorHandler";
+import { toastConfig } from "./lib/toast.config";
+
+// Sentry 초기화
+initSentry();
 
 // Create a QueryClient optimized for React Native + Zustand
 const queryClient = new QueryClient({
@@ -35,6 +43,13 @@ const queryClient = new QueryClient({
       retry: 1,
     },
   },
+  // React Query v5: 전역 에러 핸들러는 QueryCache와 MutationCache 사용
+  queryCache: new QueryCache({
+    onError: handleQueryError,
+  }),
+  mutationCache: new MutationCache({
+    onError: handleQueryError,
+  }),
 });
 
 const Tab = createBottomTabNavigator();
@@ -169,10 +184,13 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <AppContent />
+          <Toast config={toastConfig} />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
