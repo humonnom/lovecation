@@ -181,6 +181,13 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           {/*<AppContent />*/}
+            <Text style={{
+                flex: 1,
+                padding: 60,
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: 24
+            }}>test</Text>
           <Toast config={toastConfig} />
         </AuthProvider>
       </QueryClientProvider>
