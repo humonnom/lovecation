@@ -30,18 +30,6 @@ export const WebViewScreen = () => {
     setCurrentUrl(navState.url);
   };
 
-  const handleGoBack = () => {
-    if (canGoBack && webViewRef.current) {
-      webViewRef.current.goBack();
-    }
-  };
-
-  const handleGoForward = () => {
-    if (canGoForward && webViewRef.current) {
-      webViewRef.current.goForward();
-    }
-  };
-
   const handleRefresh = () => {
     if (webViewRef.current) {
       setError(false);
@@ -82,14 +70,12 @@ export const WebViewScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Loading Indicator */}
       {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#EE9CA7" />
         </View>
       )}
 
-      {/* WebView */}
       <WebView
         ref={webViewRef}
         source={{ uri: WEB_URL }}
@@ -99,9 +85,7 @@ export const WebViewScreen = () => {
         onLoadEnd={handleLoadEnd}
         onError={handleError}
         onHttpError={handleError}
-        // JavaScript injection to identify app
         injectedJavaScript={`
-          window.isLovecationApp = true;
           window.ReactNativeWebView = true;
           true;
         `}
@@ -115,8 +99,6 @@ export const WebViewScreen = () => {
         cacheMode="LOAD_DEFAULT"
         // Pull to refresh
         pullToRefreshEnabled={true}
-        // User agent - mobile optimized
-        userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1"
         // Allow file access
         allowFileAccess={true}
         allowUniversalAccessFromFileURLs={true}
