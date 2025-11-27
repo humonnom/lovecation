@@ -3,8 +3,18 @@ import { View, StyleSheet, ActivityIndicator, Text, TouchableOpacity, SafeAreaVi
 import { WebView } from 'react-native-webview';
 import { MaterialIcons } from '@expo/vector-icons';
 import type { WebViewNavigation } from 'react-native-webview';
+import * as Localization from 'expo-localization';
+import { LOCALES } from '../i18n/constants';
 
-const WEB_URL = 'https://lovecation-web.vercel.app/';
+const BASE_URL = 'https://lovecation-web.vercel.app';
+
+const getInitialUrl = (): string => {
+  const deviceLanguage = Localization.getLocales()[0]?.languageCode || LOCALES.KO;
+  const locale = deviceLanguage === LOCALES.JA ? LOCALES.JA : LOCALES.KO;
+  return `${BASE_URL}/${locale}`;
+};
+
+const WEB_URL = getInitialUrl();
 
 export const WebViewScreen = () => {
   const webViewRef = useRef<WebView>(null);
@@ -89,6 +99,12 @@ export const WebViewScreen = () => {
         onLoadEnd={handleLoadEnd}
         onError={handleError}
         onHttpError={handleError}
+        // JavaScript injection to identify app
+        injectedJavaScript={`
+          window.isLovecationApp = true;
+          window.ReactNativeWebView = true;
+          true;
+        `}
         // WebView settings
         javaScriptEnabled={true}
         domStorageEnabled={true}
